@@ -76,9 +76,10 @@ const Home: React.FC = () => {
     }
   }
 
-  const handleAuthSuccess = (newToken: string) => {
+  const handleAuthSuccess = async (newToken: string) => {
     setToken(newToken)
     setShowAuth(false)
+    await fetchUserProfile(newToken)
     toast({
       title: 'Success',
       description: 'You are now logged in',
