@@ -19,7 +19,7 @@ jobs:
               with:
                 working-directory: product-service
                 environment: python
-                path: ./install
+                path: product-service/install
                 key: requirements.txt
 
             - name: Run Unit Test
