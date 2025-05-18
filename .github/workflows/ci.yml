@@ -17,13 +17,13 @@ jobs:
                     cache-key: package-lock.json
 
                   - name: user-service
-                    working-directory: /user-service
+                    working-directory: user-service
                     environment: python
                     cache-path: install
                     cache-key: requirements.txt
 
                   - name: product-service
-                    working-directory: /product-service
+                    working-directory: product-service
                     environment: python
                     cache-path: install
                     cache-key: requirements.txt
@@ -31,7 +31,7 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
-              
+
             - name: Checkout & Setup Environment
               uses: ./.github/actions/setup-env
               with:

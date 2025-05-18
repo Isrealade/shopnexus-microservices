@@ -29,26 +29,24 @@ runs:
       uses: actions/checkout@v4
 
     - name: Node Environment
-      if: ${{ inputs.environment == "node" }}
+      if: inputs.environment == "node"
       uses: actions/setup-node@v4
       with:
         node-version: 23.x 
 
     - name: Python Environment
-      if: ${{ inputs.environment != 'node' }}
+      if: inputs.environment != 'node'
       uses: actions/setup-python@v5
       with:
         python-version: 3.12
 
     - name: Cache
       uses: actions/cache@v4
-      working-directory: ${{ inputs.working-directory }}
       with:
         path: ${{ inputs.path }}
         key: ${{ runner.os }}-${{ inputs.environment }}-${{ hashFiles(inputs.key) }}-${{ inputs.working-directory }}
 
     - name: Install Node Dependencies
-      working-directory: ${{ inputs.working-directory }}
       if: ${{ inputs.environment == "node" }}
       shell: bash
       run: npm install
