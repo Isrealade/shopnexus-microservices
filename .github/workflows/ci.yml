@@ -1,0 +1,41 @@
+name: CI Test for all Services
+
+on:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                service:
+                  - name: frontend
+                    working-directory: frontend
+                    environment: node
+                    cache-path: node_modules
+                    cache-key: package-lock.json
+
+                  - name: user-service
+                    working-directory: /user-service
+                    environment: python
+                    cache-path: install
+                    cache-key: requirements.txt
+
+                  - name: product-service
+                    working-directory: /product-service
+                    environment: python
+                    cache-path: install
+                    cache-key: requirements.txt
+
+        steps:
+            - name: Checkout & Setup Environment
+              uses: ./.github/actions/checkout-setup-env
+              with:
+                working-directory: ${{ matrix.service.working-directory }}
+                environment: ${{ matrix.service.environment }}
+                path: ${{ matrix.service.cache-path }}
+                key: ${{ matrix.service.cache-key }}
+
+
+    

@@ -1,0 +1,23 @@
+name: User-service CI
+
+on: 
+    push:
+        paths: 
+            - ./user-service
+
+
+jobs:
+    front-end:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout & Setup
+              uses: ./.github/actions/setup-env
+              with:
+                working-directory: /user-service
+                environment: python
+                path: install
+                key: requirements.txt
+
+            - name: Run Unit Test
+              run:  python -m unittest tests/test_app.py
+

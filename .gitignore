@@ -1,0 +1,47 @@
+# Node modules
+frontend/node_modules/
+
+# Python virtual environments
+user-service/venv/
+product-service/venv/
+venv/
+.env/
+
+# Python cache
+__pycache__/
+user-service/__pycache__/
+product-service/__pycache__/
+
+# Environment variable files
+.env
+.env.*
+!.env.example
+
+# Log files
+*.log
+
+# Database and data volumes
+postgres_data/
+redis_data/
+
+# Docker artifacts
+*.pid
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
+
+# Test and coverage outputs
+coverage/
+*.coverage
+*.pyc
+
+# Build outputs
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+dist/
+build/

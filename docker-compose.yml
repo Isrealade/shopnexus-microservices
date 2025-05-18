@@ -1,0 +1,63 @@
+name: ShopNexus
+services:
+  postgres:
+    image: postgres:14
+    env_file:
+      - ./.env.db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
+    networks: 
+      - app-network
+  redis:
+    image: redis:6
+    volumes:
+      - redis_data:/data
+    networks: 
+      - app-network
+  user-service:
+    build:
+      dockerfile: dockerfile
+      context: ./user-service/
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./user-service/.env.user-service
+    networks: 
+      - app-network
+    depends_on:
+      - postgres
+      - redis
+  product-service:
+    build:
+      dockerfile: dockerfile
+      context: ./product-service/
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./product-service/.env.product-service
+    networks: 
+      - app-network
+    depends_on:
+      - postgres
+      - redis
+  frontend:
+    build:
+      dockerfile: dockerfile
+      context: ./frontend/
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    networks: 
+      - app-network
+    depends_on:
+      - user-service
+      - product-service 
+
+networks:
+  app-network:
+
+volumes:
+  postgres_data:
+  redis_data: 

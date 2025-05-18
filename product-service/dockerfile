@@ -1,0 +1,51 @@
+# === Stage 1: Build stage ===
+FROM python:3.12-slim AS builder
+
+# Set Working directory
+WORKDIR /app
+
+# Add system packages needed for psycopg2 and pip build tools
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    libpq-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy and install dependencies
+COPY requirements.txt .
+
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir --target=/install -r requirements.txt
+
+# Copy app source
+COPY . .
+
+# === Stage 2: Runtime stage ===
+FROM python:3.12-slim
+
+# Set environment variables for better Python behavior in containers
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PATH="/install/bin:$PATH" \
+    PYTHONPATH="/install"
+
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy installed Python packages from builder stage
+COPY --from=builder /install /install
+
+# Copy application code
+COPY --from=builder /app .
+
+# Expose port 
+EXPOSE 5002
+
+# Run app 
+CMD ["python", "app.py"] 

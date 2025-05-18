@@ -1,0 +1,23 @@
+name: Frontend CI
+
+on: 
+    push:
+        paths: 
+            - ./frontend
+
+
+jobs:
+    front-end:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout & Setup
+              uses: ./.github/actions/setup-env
+              with:
+                working-directory: /frontend
+                environment: node
+                path: node_modules
+                key: package-lock.json
+
+            - name: Run Unit Test
+              run: npm run test
+
