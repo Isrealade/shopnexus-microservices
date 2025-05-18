@@ -7,9 +7,16 @@ import redis
 import os
 from datetime import timedelta
 import bcrypt
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 CORS(app)
+
+# Initialize Prometheus metrics with default metrics
+metrics = PrometheusMetrics(app, path='/metrics')
+
+# Add default metrics
+metrics.info('app_info', 'Application info', version='1.0.0')
 
 # Configure database
 is_production = os.getenv('FLASK_ENV') == 'production'
