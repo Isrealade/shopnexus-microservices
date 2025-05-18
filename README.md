@@ -50,7 +50,7 @@ graph TD
 
 ```sh
 git clone https://github.com/isrealade/shopnexus-microservices.git
-cd shopnexus
+cd shopnexus-microservices
 ```
 
 ### 2. Install Dependencies
@@ -167,9 +167,3 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 ## 📝 License
 
 [MIT](LICENSE)
-
----
-
-## 💡 Credits
-
-Built with ❤️ by the ShopNexus team.
