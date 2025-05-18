@@ -30,7 +30,7 @@ jobs:
 
         steps:
             - name: Checkout & Setup Environment
-              uses: ./.github/actions/checkout-setup-env
+              uses: ./.github/actions/setup-env
               with:
                 working-directory: ${{ matrix.service.working-directory }}
                 environment: ${{ matrix.service.environment }}
