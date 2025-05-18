@@ -29,7 +29,7 @@ runs:
       uses: actions/checkout@v4
 
     - name: Node Environment
-      if: inputs.environment == "node"
+      if: inputs.environment == 'node'
       uses: actions/setup-node@v4
       with:
         node-version: 23.x 
@@ -47,13 +47,12 @@ runs:
         key: ${{ runner.os }}-${{ inputs.environment }}-${{ hashFiles(inputs.key) }}-${{ inputs.working-directory }}
 
     - name: Install Node Dependencies
-      if: inputs.environment == node
+      if: inputs.environment == 'node'
       shell: bash
       run: npm install
 
     - name: Install Python Dependencies
-      working-directory: ${{ inputs.working-directory }}
-      if: inputs.environment != node
+      if: inputs.environment != 'node'
       shell: bash
       run: pip install --no-cache-dir --target=./install -r requirements.txt
 
