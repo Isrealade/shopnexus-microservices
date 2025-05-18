@@ -8,6 +8,7 @@ import redis
 from datetime import timedelta
 import time
 from sqlalchemy.exc import OperationalError
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 # Configure CORS to allow requests from frontend
@@ -18,6 +19,12 @@ CORS(app, resources={
         "allow_headers": ["Content-Type", "Authorization"]
     }
 })
+
+# Initialize Prometheus metrics with default metrics
+metrics = PrometheusMetrics(app, path='/metrics')
+
+# Add default metrics
+metrics.info('app_info', 'Application info', version='1.0.0')
 
 # Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://user:password@postgres:5432/products')
