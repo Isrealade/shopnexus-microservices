@@ -49,11 +49,15 @@ runs:
     - name: Install Node Dependencies
       if: inputs.environment == 'node'
       shell: bash
-      run: npm install
+      run: |
+        cd ${{ inputs.working-directory }}
+        npm install
 
     - name: Install Python Dependencies
       if: inputs.environment != 'node'
       shell: bash
-      run: pip install --no-cache-dir --target=./install -r requirements.txt
+      run: |
+        cd ${{ inputs.working-directory }}
+        pip install --no-cache-dir --target=./install -r requirements.txt
 
   
