@@ -4,6 +4,7 @@ on:
     push:
         paths: 
             - ./product-service
+    workflow_dispatch:
 
 
 jobs:
@@ -13,7 +14,7 @@ jobs:
             - name: Checkout & Setup
               uses: ./.github/actions/setup-env
               with:
-                working-directory: /product-service
+                working-directory: product-service
                 environment: python
                 path: install
                 key: requirements.txt

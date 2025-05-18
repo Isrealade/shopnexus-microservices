@@ -4,6 +4,7 @@ on:
     push:
         paths: 
             - ./frontend
+    workflow_dispatch:
 
 
 jobs:
@@ -13,7 +14,7 @@ jobs:
             - name: Checkout & Setup
               uses: ./.github/actions/setup-env
               with:
-                working-directory: /frontend
+                working-directory: frontend
                 environment: node
                 path: node_modules
                 key: package-lock.json
