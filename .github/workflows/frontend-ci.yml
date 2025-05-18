@@ -11,6 +11,9 @@ jobs:
     front-end:
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              
             - name: Checkout & Setup
               uses: ./.github/actions/setup-env
               with:
