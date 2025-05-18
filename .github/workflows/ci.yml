@@ -29,6 +29,9 @@ jobs:
                     cache-key: requirements.txt
 
         steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              
             - name: Checkout & Setup Environment
               uses: ./.github/actions/setup-env
               with:
