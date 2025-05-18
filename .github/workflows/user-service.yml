@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-    front-end:
+    user-service:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -19,7 +19,7 @@ jobs:
               with:
                 working-directory: user-service
                 environment: python
-                path: install
+                path: ./install
                 key: requirements.txt
 
             - name: Run Unit Test
