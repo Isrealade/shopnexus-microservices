@@ -3,7 +3,7 @@ name: User-service CI
 on: 
     push:
         paths: 
-            - ./user-service
+            - user-service/**
     workflow_dispatch:
 
 
