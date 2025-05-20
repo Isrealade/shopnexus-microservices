@@ -288,8 +288,6 @@ For major changes, please open an issue first to discuss what you would like to 
 - [x] Metrics simulation
 - [ ] Distributed tracing
 - [ ] Advanced alerting
-- [ ] Performance optimization
-- [ ] Security enhancements
 
 ---
 
