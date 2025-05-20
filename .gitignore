@@ -19,6 +19,9 @@ product-service/__pycache__/
 
 # Log files
 *.log
+logs/
+user-service/logs/
+product-service/logs/
 
 # Database and data volumes
 postgres_data/
@@ -45,3 +48,7 @@ frontend/out/
 frontend/.turbo/
 dist/
 build/
+
+# Additional folders
+var/
+fluentbit/

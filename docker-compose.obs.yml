@@ -1,79 +1,6 @@
 name: ShopNexus
 
 services:
-  # Databases & Caches
-  postgres:
-    image: postgres:14
-    env_file:
-      - ./.env.db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
-    networks: 
-      - shopnexus-net
-
-  redis:
-    image: redis:6
-    volumes:
-      - redis_data:/data
-    networks: 
-      - shopnexus-net
-
-  # Microservices
-  user-service:
-    build:
-      dockerfile: dockerfile
-      context: ./user-service/
-    ports:
-      - "5001:5001"
-    env_file:
-      - ./user-service/.env.user-service
-    networks: 
-      - shopnexus-net
-    depends_on:
-      - postgres
-      - redis
-
-  product-service:
-    build:
-      dockerfile: dockerfile
-      context: ./product-service/
-    ports:
-      - "5002:5002"
-    env_file:
-      - ./product-service/.env.product-service
-    networks: 
-      - shopnexus-net
-    depends_on:
-      - postgres
-      - redis
-
-  frontend:
-    build:
-      dockerfile: dockerfile
-      context: ./frontend/
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./frontend/.env
-    networks: 
-      - shopnexus-net
-    depends_on:
-      - user-service
-      - product-service
-
-  # Service Simulator
-  simulator:
-    build: 
-      dockerfile: dockerfile
-      context: ./metrics-simulator
-    environment:
-      - LOAD_PERCENTAGE=25
-      - ERROR_PERCENTAGE=3
-    networks:
-      - shopnexus-net
-
-  # Observability - Monitoring
   prometheus:
     image: bitnami/prometheus:3.4.0
     ports:
@@ -84,13 +11,11 @@ services:
     networks:
       - shopnexus-net
       - monitoring
-
   node-exporter:
     image: bitnami/node-exporter:1.9.1
     networks:
       - shopnexus-net
       - monitoring
-
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     volumes:
@@ -101,7 +26,7 @@ services:
     networks:
       - shopnexus-net
       - monitoring
-
+      
   grafana:
     image: grafana/grafana:12.0.0
     env_file:
@@ -118,7 +43,6 @@ services:
     depends_on:
       - prometheus
 
-  # Observability - Logging
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
     environment:
@@ -144,7 +68,6 @@ services:
       - logging
     depends_on:
       - elasticsearch
-
   kibana:
     image: docker.elastic.co/kibana/kibana:7.9.3
     env_file:
@@ -159,19 +82,14 @@ services:
     depends_on:
       - elasticsearch  
 
-# Volumes
 volumes:
-  postgres_data:
-  redis_data:
   prometheus-data:
+  fluet_bit-logs:
   grafana-data:
   elasticsearch-data:
   kibana-data:
 
-# Networks
 networks:
-  shopnexus-net:
-    name: shopnexus_shopnexus-net
-    external: true
   monitoring:
   logging:
+  shopnexus-net:
