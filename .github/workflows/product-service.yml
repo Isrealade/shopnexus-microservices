@@ -3,7 +3,7 @@ name: Product-service CI
 on: 
     push:
         paths: 
-            - ./product-service
+            - product-service/**
     workflow_dispatch:
 
 
