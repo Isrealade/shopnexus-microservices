@@ -9,37 +9,27 @@ A modern, microservices-based e-commerce platform designed for scalability, perf
 ```mermaid
 graph TD
     %% Frontend Flow
-    Client[Client Browser]:::client --> Frontend[Frontend Service<br/>Next.js]:::frontend
-    Frontend --> UserService[User Service<br/>Flask]:::service
-    Frontend --> ProductService[Product Service<br/>Flask]:::service
+    Client[Client Browser] --> Frontend[Frontend Service<br/>Next.js]
+    Frontend --> UserService[User Service<br/>Flask]
+    Frontend --> ProductService[Product Service<br/>Flask]
 
     %% Application Data Flow
-    UserService --> Redis[(Redis Cache)]:::cache
+    UserService --> Redis[(Redis Cache)]
     ProductService --> Redis
-    UserService --> PostgreSQL[(PostgreSQL)]:::database
+    UserService --> PostgreSQL[(PostgreSQL)]
     ProductService --> PostgreSQL
 
     %% Monitoring (Metrics)
-    UserService --> Prometheus[Prometheus]:::monitoring
+    UserService --> Prometheus[Prometheus]
     ProductService --> Prometheus
-    MetricsSim[Metrics Simulator]:::simulator --> Prometheus
-    Prometheus --> Grafana[Grafana]:::monitoring
+    MetricsSim[Metrics Simulator] --> Prometheus
+    Prometheus --> Grafana[Grafana]
 
     %% Logging (EFK)
-    UserService --> FluentBit[Fluent Bit]:::logging
+    UserService --> FluentBit[Fluent Bit]
     ProductService --> FluentBit
-    FluentBit --> Elasticsearch[Elasticsearch]:::logging
-    Elasticsearch --> Kibana[Kibana]:::logging
-
-    %% Style Definitions
-    classDef client fill:#d6eaff,stroke:#007acc,stroke-width:1px;
-    classDef frontend fill:#f0f9ff,stroke:#00bfff,stroke-width:1px;
-    classDef service fill:#fef3c7,stroke:#f59e0b,stroke-width:1px;
-    classDef database fill:#e5fbee,stroke:#10b981,stroke-width:1px;
-    classDef cache fill:#fce7f3,stroke:#ec4899,stroke-width:1px;
-    classDef monitoring fill:#ede9fe,stroke:#8b5cf6,stroke-width:1px;
-    classDef logging fill:#fef2f2,stroke:#ef4444,stroke-width:1px;
-    classDef simulator fill:#fff7ed,stroke:#f97316,stroke-width:1px;
+    FluentBit --> Elasticsearch[Elasticsearch]
+    Elasticsearch --> Kibana[Kibana]
 ```
 
 ---
